@@ -32,6 +32,8 @@ public class SignupController {
 	//<form action="cauth" method="get">
 	@GetMapping("/signup")
 	public String showSignup() {
+		System.out.println("sfvnjsfnj");
+
 		return "signup";  // signup.jsp
 	}
 	
@@ -40,12 +42,15 @@ public class SignupController {
 		// If there are validation errors, return to the form page
         if (result.hasErrors()) {
         	model.addAttribute("message","Validation error.");
+				System.out.println("sfvnjsfnj");
+
             return "auth";
         }
         if(employeeRepository.existsByEmail(employee.getEmail())) {
         	model.addAttribute("message","email already exists");
         	return "auth";
         }
+		System.out.println("sfvnjsfnj");
 		employeeService.addEmployee(employee);
 		model.addAttribute("message","Hey! registration is done");
 		return "auth";  // auth.jsp
