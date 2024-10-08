@@ -38,7 +38,7 @@
             Email
         </a>
         </th>
-         <th>Action</th>
+         <th>Image</th>
       </tr>
     </thead>
     <tbody>
@@ -58,6 +58,18 @@
         <td><%=employee.getFirstName()%></td>
         <td><%=employee.getLastName()%></td>
         <td><%=employee.getEmail() %></td>
+<!--         <td scope="row"> -->
+<!--     <img alt=""  -->
+<%--          src="data:image/jpeg;base64,<%=employee.getImage()%>"  --%>
+<!--          style="width: 100px; height: 100px;"> -->
+<!-- </td> -->
+<td>
+<img alt="Employee Image" 
+     src="<%= employee.getImage() != null && !employee.getImage().isEmpty() ? 
+          "data:image/jpeg;base64," + employee.getImage() : 
+         "https://images.pexels.com/photos/56866/garden-rose-red-pink-56866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" %>" 
+     style="width: 100px; height: 100px;">
+ </td>
         <td>
           <a href="deleteEmployee?email=<%=employee.getEmail() %>">
               <button type="button" class="btn btn-danger">Del!</button>

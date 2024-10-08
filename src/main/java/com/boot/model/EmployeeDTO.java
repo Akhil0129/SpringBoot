@@ -1,5 +1,7 @@
 package com.boot.model;
 
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -14,8 +16,19 @@ public class EmployeeDTO {
 	@NotBlank(message = "Email cannot be blank")
 	@Email(message = "Email should be valid")
 	private String email;
-	private String password = "jill";
 	
+	private String password = "jill";
+	@Lob
+	@Column(columnDefinition = "MEDIUMBLOB")
+	private String image;
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	
 	public Long getId() {
 		return id;

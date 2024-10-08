@@ -22,7 +22,7 @@
  <h2 style="background-color: fuchsia;">Signup Page!!!</h2>
  <hr/>
  
-   <form action="signup" method="post">
+   <form action="signup" method="post"enctype="multipart/form-data">
      <div style="width: 50%">
 	   <h5>FirstName :</h5>
 	   <input required="required" type="text" class="form-control" name="firstName"/> 
@@ -33,6 +33,8 @@
 	    <h5>Email :</h5>
 	   
 	   <input required="required" type="email" class="form-control"  name="email"/> 
+	   	<input  type="file" class="form-control"  name="file"/> 
+	   
 	    <hr/>
 	   <button type="submit" class="btn btn-primary">Signup!</button>
 	   </div>

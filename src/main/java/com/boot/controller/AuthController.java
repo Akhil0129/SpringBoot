@@ -40,9 +40,6 @@ public class AuthController {
 			// so that I can pick it on jsp
 			// loading employee
 			List<EmployeeDTO> employees = employeeService.findEmployees();
-			System.out.print(false);
-			System.out.print(true);
-
 			// adding into request scope
 			model.addAttribute("employees", employees);
 			return "home";

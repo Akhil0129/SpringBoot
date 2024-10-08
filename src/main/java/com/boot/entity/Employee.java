@@ -1,9 +1,11 @@
 package com.boot.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -17,9 +19,19 @@ public class Employee {
 	private String lastName;
 	private String email;
 	private String password;
-
+	@Lob
+	@Column(columnDefinition = "MEDIUMBLOB")
+	private String image;
 	public Long getId() {
 		return id;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public void setId(Long id) {
