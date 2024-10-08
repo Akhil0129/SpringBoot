@@ -45,7 +45,6 @@ public class SignupController {
         }
         if(employeeRepository.existsByEmail(employee.getEmail())) {
         	model.addAttribute("message","email already exists");
-		System.out.println("jfskfj");
         	return "auth";
         }
 		employeeService.addEmployee(employee);
@@ -58,7 +57,6 @@ public class SignupController {
 	public String ecditEmployee(String email,Model model) {
 		EmployeeDTO employee=employeeService.findEmployeeByEmail(email);
 		model.addAttribute("employee", employee);
-				System.out.println("jfskfj");
 
 		return "esignup";  // esignup.jsp
 	}
