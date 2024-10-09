@@ -9,15 +9,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.boot.entity.Employee;
+import com.boot.entity.LoginTable;
 
 @Repository
-public interface EmployeeRepository  extends JpaRepository<Employee, Long> {
+public interface LoginTableRepository  extends JpaRepository<LoginTable, Long> {
 	
-	@Modifying
-	@Transactional
-	public void deleteByEmail(String email);
-	
-	public Optional<Employee> findByEmail(String email);
+
 	
 
 }
