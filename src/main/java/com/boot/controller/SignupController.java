@@ -60,10 +60,10 @@ public class SignupController {
 		boolean status=employeeService.addEmployee(employee);
 		if(status) {
 			model.addAttribute("message","Hey! registration is done");
-			return "signup";
 		}
 		else {
         	model.addAttribute("message","email already exists");
+			return "signup";
         }
 		return "auth";  // auth.jsp
 	}

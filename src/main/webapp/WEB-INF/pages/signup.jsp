@@ -21,7 +21,7 @@
  
  <h2 style="background-color: fuchsia;">Signup Page!!!</h2>
  <hr/>
- 
+ <h3 style="color: red">${message}</h3>
    <form action="signup" method="post"enctype="multipart/form-data">
      <div style="width: 50%">
 	   <h5>FirstName :</h5>
