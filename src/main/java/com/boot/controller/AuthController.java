@@ -2,6 +2,8 @@ package com.boot.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,21 +22,26 @@ public class AuthController {
 
 	// <form action="cauth" method="get">
 	@GetMapping({"/cauth","/"})
-	public String showAuthJsp(@RequestParam(required = false) String logout,Model model) {
-		if(logout!=null) {
+	public String showAuthJsp(@RequestParam(required = false) String logout,HttpSession session,Model model) {
+		if(logout!=null && session.getAttribute("llr")!=null) {	
+		long llr=(long) session.getAttribute("llr");
+			employeeService.updateLogoutTime(llr);
+			session.invalidate();
 			model.addAttribute("message", "You have logged out successfully!");
 		}
 		return "auth"; // auth.jsp
 	}
 
 	@PostMapping("/cauth")
-	public String postAuth(@RequestParam String email, @RequestParam String ppassword, Model model) {
+	public String postAuth(@RequestParam String email, @RequestParam String ppassword,HttpSession session, Model model) {
 		if (!validateEmail(email)) {
 			model.addAttribute("message", "Hey your email is not valid!");
 			return "auth";
 		}
 		EmployeeDTO employee = new EmployeeDTO(email, ppassword);
 		if (employeeService.findEmployees().contains(employee)) {
+			long llr=employeeService.saveLogin(email);
+			session.setAttribute("llr", llr);
 			model.addAttribute("message", "User is there, Thank you!");
 			// I am setting this messasge inside request scope
 			// so that I can pick it on jsp

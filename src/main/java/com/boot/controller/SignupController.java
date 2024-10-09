@@ -46,10 +46,6 @@ public class SignupController {
         	model.addAttribute("message","Validation error.");
             return "auth";
         }
-        if(employeeRepository.existsByEmail(employee.getEmail())) {
-        	model.addAttribute("message","email already exists");
-        	return "auth";
-        }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		if(fileName.contains(".."))
 		{
@@ -61,8 +57,14 @@ public class SignupController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		employeeService.addEmployee(employee);
-		model.addAttribute("message","Hey! registration is done");
+		boolean status=employeeService.addEmployee(employee);
+		if(status) {
+			model.addAttribute("message","Hey! registration is done");
+			return "signup";
+		}
+		else {
+        	model.addAttribute("message","email already exists");
+        }
 		return "auth";  // auth.jsp
 	}
 	

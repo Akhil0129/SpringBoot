@@ -1,8 +1,13 @@
 package com.boot.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import java.sql.Timestamp;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +15,10 @@ import org.springframework.stereotype.Service;
 
 import com.boot.advice.EmployeeNotFoundExeception;
 import com.boot.dao.EmployeeRepository;
+import com.boot.dao.LoginTableRepository;
 import com.boot.entity.Employee;
+import com.boot.entity.LoginTable;
+
 import com.boot.model.EmployeeDTO;
 
 @Service
@@ -18,6 +26,8 @@ public class EmployeeService {
 	
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	@Autowired
+	private LoginTableRepository loginRepository;
 	
 	public  void deleteByEmail(String email) {
 		employeeRepository.deleteByEmail(email);
@@ -38,10 +48,15 @@ public class EmployeeService {
 	 *  This method is adding data inside database
 	 * @param employee
 	 */
-	public  void addEmployee(EmployeeDTO employee ) {
+	public  boolean addEmployee(EmployeeDTO employee ) {
+		 Optional<Employee>optional=employeeRepository.findByEmail(employee.getEmail());
+		if(optional.isPresent()) {
+			return false;
+		}
 		Employee entity=new Employee();
 		BeanUtils.copyProperties(employee, entity);
 		employeeRepository.save(entity);
+		return true;
 	}
 	
 	public  List<EmployeeDTO> findEmployees(){
@@ -68,5 +83,18 @@ public class EmployeeService {
 			dbEmployee.setPassword(employee.getPassword());
 		}
 		employeeRepository.save(dbEmployee);
+	}
+	public  Long saveLogin(String  email ) {
+		 Employee employee=employeeRepository.findByEmail(email).get();
+		 LoginTable history=new LoginTable();
+		history.setEmployee(employee);
+		history.setLoginTime(new Timestamp(new Date().getTime()));
+		LoginTable login=loginRepository.save(history);
+		return login.getId();
+	}
+	@Transactional
+	public  void updateLogoutTime(long llr) {
+		LoginTable history=loginRepository.findById(llr).get();
+		history.setLogoutTime(new Timestamp(new Date().getTime()));
 	}
 }
